@@ -1,6 +1,6 @@
 {
-  "name": "JanSuvidha Kendra & Business Facilitation Center",
-  "description": "Trusted offline business consultancy and e-governance facilitation center for business licenses, GST, ITR, MSME, DSC, and documentation services in India.",
+  "name": "JanSuvidha Kendra Satna",
+  "description": "Offline business consultancy & e-governance facilitation center in Civil Lines, Satna MP. PAN Card, GST, ITR, Food License & DSC tokens.",
   "requestFramePermissions": [],
   "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
 }

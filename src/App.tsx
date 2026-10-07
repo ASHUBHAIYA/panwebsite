@@ -16,15 +16,78 @@ import {
   ExternalLink,
   Printer,
   AlertCircle,
-  Check
+  Check,
+  Bell,
+  Sparkles
 } from 'lucide-react';
 
 // Contact Constants
 const PHONE_NUMBER = '+91 88712 17486';
 const PHONE_NUMBER_RAW = '918871217486';
-const OFFICE_LANDLINE = '011-2345-6789';
-const OFFICE_EMAIL = 'helpdesk@jansuvidhacenter.in';
-const OFFICE_ADDRESS = 'Shop No. 12, Ground Floor, Sai Plaza Commercial Complex, Opp. SDM / Tehsil Office, Main Market Road, Sector 14, New Delhi - 110001';
+const OFFICE_LANDLINE = '918871217486';
+const OFFICE_EMAIL = 'abhishek791996@gmail.com';
+const OFFICE_ADDRESS = 'Civil Lines Satna M.P 485001';
+
+// Announcement Popup Rate Chart
+const POPUP_RATE_CHART = [
+  {
+    id: 'pan',
+    title: 'PAN Card (New / Correction / Minor)',
+    price: '₹150 - ₹200',
+    turnaround: 'E-PAN in 2-4 Hours',
+    desc: 'Instant Aadhaar biometric/OTP mode. Free doorstep delivery of original physical card.',
+    highlight: true,
+  },
+  {
+    id: 'itr',
+    title: 'Income Tax Return (ITR 1 & 4)',
+    price: 'Starting ₹300 - ₹500',
+    turnaround: 'Same Day Filing',
+    desc: 'Salaried, traders, small business & instant TDS refund calculation.',
+  },
+  {
+    id: 'gst-reg',
+    title: 'GST Registration (New GSTIN)',
+    price: 'Starting ₹999',
+    turnaround: '3 - 5 Days',
+    desc: 'Complete portal registration, certificate generation & login handover.',
+  },
+  {
+    id: 'gst-monthly',
+    title: 'Monthly GST Returns (GSTR-1 & 3B)',
+    price: 'Starting ₹400 / month',
+    turnaround: 'Monthly Desk',
+    desc: 'Accurate purchase reconciliation, ITC matching & zero-penalty challans.',
+  },
+  {
+    id: 'fssai',
+    title: 'Food License (FSSAI / FoSCoS)',
+    price: 'Starting ₹600',
+    turnaround: '2 - 4 Days',
+    desc: 'Mandatory certificate for Kirana stores, food stalls, and restaurants.',
+  },
+  {
+    id: 'shop-act',
+    title: 'Shop Act / Gumasta License',
+    price: 'Starting ₹500',
+    turnaround: '1 - 3 Days',
+    desc: 'Municipal business trade registration for opening bank Current Accounts.',
+  },
+  {
+    id: 'msme',
+    title: 'MSME / Udyam Registration',
+    price: 'Starting ₹250',
+    turnaround: '2 - 3 Hours',
+    desc: 'Official MSME certificate for bank loan priority and government schemes.',
+  },
+  {
+    id: 'dsc',
+    title: 'Class 3 Digital Signature (DSC Token)',
+    price: 'Starting ₹1,200',
+    turnaround: '30 - 60 Minutes',
+    desc: '2-Year validity crypto USB hardware token for e-tenders & MCA filings.',
+  },
+];
 
 interface ServiceItem {
   id: string;
@@ -343,7 +406,7 @@ const BUSINESS_PROFILES = [
 const FAQS = [
   {
     q: 'Do I need to visit your physical center, or can I send documents over WhatsApp?',
-    a: 'Both options are supported. You can send clear photos or PDF scans of your documents directly on our official WhatsApp (+91 88712 17486). For physical token collection (like Digital Signature USB tokens) or in-person verification, you can visit our Sector 14 center during office hours.'
+    a: 'Both options are supported. You can send clear photos or PDF scans of your documents directly on our official WhatsApp (+91 88712 17486). For physical token collection (like Digital Signature USB tokens) or in-person verification, you can visit our Civil Lines center in Satna during office hours.'
   },
   {
     q: 'How do you prevent rejections or delays on government portals?',
@@ -368,6 +431,7 @@ const FAQS = [
 ];
 
 export default function App() {
+  const [showAnnouncement, setShowAnnouncement] = useState(true);
   const [selectedCategory, setSelectedCategory] = useState<'all' | 'taxation' | 'licenses' | 'legal' | 'personal'>('all');
   const [searchQuery, setSearchQuery] = useState('');
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -444,33 +508,7 @@ export default function App() {
 
   return (
     <div className="min-h-screen bg-slate-50 text-slate-800 flex flex-col antialiased">
-      {/* 1. TOP ANNOUNCEMENT BAR */}
-      <header className="bg-slate-900 text-slate-300 text-xs border-b border-slate-800">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-2 flex flex-col sm:flex-row items-center justify-between gap-2">
-          <div className="flex items-center gap-2 font-medium">
-            <span className="flex h-2 w-2 relative">
-              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
-              <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
-            </span>
-            <span className="text-emerald-400 font-semibold">Offline Desk Open:</span>
-            <span>Mon–Sat: 9:30 AM – 7:30 PM • Walk-ins & WhatsApp consultations welcome</span>
-          </div>
-
-          <div className="flex items-center gap-4 text-slate-300">
-            <a href="tel:+918871217486" className="hover:text-white flex items-center gap-1.5 transition-colors font-medium">
-              <Phone className="w-3.5 h-3.5 text-blue-400" />
-              <span>{PHONE_NUMBER}</span>
-            </a>
-            <span className="hidden md:inline text-slate-600">|</span>
-            <span className="hidden md:flex items-center gap-1 text-slate-400">
-              <MapPin className="w-3.5 h-3.5 text-red-400" />
-              <span>Sector 14, Near SDM Office, New Delhi</span>
-            </span>
-          </div>
-        </div>
-      </header>
-
-      {/* 2. NAVIGATION BAR */}
+      {/* 1. NAVIGATION BAR */}
       <nav className="sticky top-0 z-40 bg-white/95 backdrop-blur-md border-b border-slate-200 shadow-xs">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between h-16 sm:h-20">
@@ -492,6 +530,12 @@ export default function App() {
             {/* Desktop Navigation Links */}
             <div className="hidden lg:flex items-center gap-7 text-sm font-medium text-slate-700">
               <a href="#services" className="hover:text-blue-700 transition-colors">Services</a>
+              <button
+                onClick={() => setShowAnnouncement(true)}
+                className="hover:text-blue-700 transition-colors cursor-pointer"
+              >
+                Rate Chart
+              </button>
               <a href="#checker" className="hover:text-blue-700 transition-colors">Document Guide</a>
               <a href="#how-it-works" className="hover:text-blue-700 transition-colors">How It Works</a>
               <a href="#why-us" className="hover:text-blue-700 transition-colors">Why Choose Us</a>
@@ -563,6 +607,15 @@ export default function App() {
             </div>
             <div className="flex flex-col space-y-2 pt-1 border-t border-slate-100 text-sm font-medium text-slate-700">
               <a href="#services" onClick={() => setMobileMenuOpen(false)} className="px-2 py-1.5 rounded-md hover:bg-slate-50">Services</a>
+              <button
+                onClick={() => {
+                  setShowAnnouncement(true);
+                  setMobileMenuOpen(false);
+                }}
+                className="text-left px-2 py-1.5 rounded-md hover:bg-slate-50 font-medium text-slate-700 cursor-pointer"
+              >
+                Rate Chart / Charges
+              </button>
               <a href="#checker" onClick={() => setMobileMenuOpen(false)} className="px-2 py-1.5 rounded-md hover:bg-slate-50">Document Guide</a>
               <a href="#how-it-works" onClick={() => setMobileMenuOpen(false)} className="px-2 py-1.5 rounded-md hover:bg-slate-50">How It Works</a>
               <a href="#why-us" onClick={() => setMobileMenuOpen(false)} className="px-2 py-1.5 rounded-md hover:bg-slate-50">Why Choose Us</a>
@@ -893,7 +946,7 @@ export default function App() {
                 2. Share Paperwork
               </h3>
               <p className="text-xs sm:text-sm text-slate-600 leading-relaxed">
-                Send photo copies on WhatsApp or drop them off at our Sector 14 center. We perform a pre-check to prevent portal rejections.
+                Send photo copies on WhatsApp or drop them off at our Civil Lines center in Satna. We perform a pre-check to prevent portal rejections.
               </p>
             </div>
 
@@ -1102,7 +1155,7 @@ export default function App() {
                     <h4 className="font-bold text-slate-900">Address:</h4>
                     <p className="text-slate-600 mt-0.5">{OFFICE_ADDRESS}</p>
                     <span className="inline-block mt-1 text-[11px] font-semibold text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded">
-                      Landmark: Opposite SDM Court / Tehsil Complex
+                      Landmark: Near Mahila Thana
                     </span>
                   </div>
                 </div>
@@ -1124,25 +1177,6 @@ export default function App() {
                     <p className="text-slate-600">Email: {OFFICE_EMAIL}</p>
                   </div>
                 </div>
-              </div>
-
-              <div className="pt-3 border-t border-slate-100 flex items-center gap-2">
-                <a
-                  href={`https://maps.google.com/?q=${encodeURIComponent('JanSuvidha Kendra Sector 14 New Delhi')}`}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="flex-1 inline-flex items-center justify-center gap-1.5 py-2.5 px-3 rounded-lg text-xs font-bold text-white bg-blue-700 hover:bg-blue-800 transition-colors"
-                >
-                  <MapPin className="w-3.5 h-3.5" />
-                  <span>Google Maps Directions</span>
-                  <ExternalLink className="w-3 h-3" />
-                </a>
-                <button
-                  onClick={handleCopyPhone}
-                  className="px-3 py-2.5 bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-bold rounded-lg transition-colors"
-                >
-                  {copiedPhone ? 'Copied' : 'Copy Number'}
-                </button>
               </div>
             </div>
 
@@ -1170,10 +1204,6 @@ export default function App() {
                     <span>Color certificate printing and lamination</span>
                   </li>
                 </ul>
-              </div>
-
-              <div className="p-3 rounded-lg bg-white/10 text-xs text-slate-300">
-                Customer parking available outside Sai Plaza.
               </div>
             </div>
           </div>
@@ -1289,6 +1319,140 @@ export default function App() {
           <span>WhatsApp</span>
         </a>
       </div>
+      {/* 14. ANNOUNCEMENT & SERVICE RATE CHART POPUP MODAL */}
+      {showAnnouncement && (
+        <div
+          role="dialog"
+          aria-modal="true"
+          className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-4 bg-slate-950/70 backdrop-blur-xs animate-in fade-in duration-200"
+          onClick={() => setShowAnnouncement(false)}
+        >
+          <div
+            className="relative w-full max-w-2xl bg-white rounded-2xl shadow-2xl border border-slate-200 overflow-hidden flex flex-col max-h-[90vh]"
+            onClick={(e) => e.stopPropagation()}
+          >
+            {/* Modal Header */}
+            <div className="bg-slate-900 text-white p-4 sm:p-5 flex items-start justify-between gap-3 border-b border-slate-800">
+              <div className="flex items-center gap-3">
+                <div className="w-10 h-10 rounded-xl bg-blue-600 text-white flex items-center justify-center shrink-0">
+                  <Bell className="w-5 h-5 text-amber-300 animate-bounce" />
+                </div>
+                <div>
+                  <div className="flex items-center gap-2">
+                    <span className="px-2 py-0.5 rounded bg-emerald-500/20 text-emerald-300 text-[10px] font-bold uppercase tracking-wider">
+                      Center Notice & Rates
+                    </span>
+                    <span className="text-slate-400 text-xs hidden sm:inline">• Civil Lines, Satna (M.P.)</span>
+                  </div>
+                  <h3 className="font-heading font-extrabold text-base sm:text-lg text-white mt-0.5">
+                    Services & Facilitation Charges
+                  </h3>
+                </div>
+              </div>
+
+              <button
+                type="button"
+                onClick={() => setShowAnnouncement(false)}
+                className="p-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-300 hover:text-white transition-colors"
+                aria-label="Close Announcement"
+              >
+                <X className="w-5 h-5" />
+              </button>
+            </div>
+
+            {/* Modal Scrollable Body */}
+            <div className="p-4 sm:p-5 overflow-y-auto space-y-3 bg-slate-50">
+              <p className="text-xs text-slate-600 leading-relaxed">
+                Welcome to <strong>JanSuvidha Kendra Satna</strong>. Below is our transparent offline facilitation rate chart. Select any service to inquire or send documents directly on WhatsApp.
+              </p>
+
+              {/* Rate Chart Cards */}
+              <div className="space-y-2.5">
+                {POPUP_RATE_CHART.map((item) => (
+                  <div
+                    key={item.id}
+                    className={`p-3 sm:p-3.5 rounded-xl border transition-all flex flex-col sm:flex-row sm:items-center justify-between gap-3 bg-white ${
+                      item.highlight
+                        ? 'border-blue-600 ring-2 ring-blue-600/20 shadow-xs'
+                        : 'border-slate-200 hover:border-slate-300'
+                    }`}
+                  >
+                    <div className="space-y-1">
+                      <h4 className="font-heading font-bold text-xs sm:text-sm text-slate-900">
+                        {item.title}
+                      </h4>
+                      <p className="text-[11px] sm:text-xs text-slate-500 leading-tight">
+                        {item.desc}
+                      </p>
+                      <div className="flex items-center gap-1.5 text-[11px] text-slate-500 pt-0.5">
+                        <Clock className="w-3 h-3 text-slate-400" />
+                        <span>Turnaround: {item.turnaround}</span>
+                      </div>
+                    </div>
+
+                    <div className="flex sm:flex-col items-center sm:items-end justify-between sm:justify-center gap-2 shrink-0 pt-2 sm:pt-0 border-t sm:border-t-0 border-slate-100">
+                      <div className="text-left sm:text-right">
+                        <span className="text-[10px] text-slate-600 block">Facilitation Fee</span>
+                        <span className="font-extrabold text-xs sm:text-sm text-blue-700 bg-blue-50 px-2 py-0.5 rounded">
+                          {item.price}
+                        </span>
+                      </div>
+
+                      <a
+                        href={`https://wa.me/${PHONE_NUMBER_RAW}?text=${encodeURIComponent(`Hi JanSuvidha Satna, I want to inquire about: "${item.title}" (Fee: ${item.price}). Please share requirements.`)}`}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="inline-flex items-center gap-1 px-3 py-1.5 rounded-lg text-xs font-bold text-white bg-emerald-600 hover:bg-emerald-700 transition-colors shrink-0"
+                      >
+                        <MessageCircle className="w-3 h-3 fill-white" />
+                        <span>Inquire</span>
+                      </a>
+                    </div>
+                  </div>
+                ))}
+              </div>
+
+              <div className="p-2.5 rounded-lg bg-blue-50 border border-blue-200 text-[11px] text-blue-900 flex items-start gap-2">
+                <AlertCircle className="w-4 h-4 text-blue-700 shrink-0 mt-0.5" />
+                <span>
+                  <strong>Transparent Billing:</strong> Official government statutory portal fees are separate and accompanied by official department receipts.
+                </span>
+              </div>
+            </div>
+
+            {/* Modal Footer Actions */}
+            <div className="p-3 sm:p-4 bg-white border-t border-slate-200 flex flex-col sm:flex-row items-center justify-between gap-2.5">
+              <div className="flex items-center gap-2 w-full sm:w-auto">
+                <a
+                  href="tel:+918871217486"
+                  className="flex-1 sm:flex-none inline-flex items-center justify-center gap-1.5 px-4 py-2 rounded-lg text-xs font-bold text-slate-700 bg-slate-100 hover:bg-slate-200 border border-slate-200 transition-colors"
+                >
+                  <Phone className="w-3.5 h-3.5 text-blue-700" />
+                  <span>Call 8871217486</span>
+                </a>
+
+                <a
+                  href={`https://wa.me/${PHONE_NUMBER_RAW}?text=${encodeURIComponent('Hello JanSuvidha Desk Satna, I have a service query.')}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex-1 sm:flex-none inline-flex items-center justify-center gap-1.5 px-4 py-2 rounded-lg text-xs font-bold text-white bg-emerald-600 hover:bg-emerald-700 transition-colors"
+                >
+                  <MessageCircle className="w-3.5 h-3.5 fill-white" />
+                  <span>WhatsApp Desk</span>
+                </a>
+              </div>
+
+              <button
+                type="button"
+                onClick={() => setShowAnnouncement(false)}
+                className="w-full sm:w-auto px-4 py-2 rounded-lg text-xs font-bold text-slate-600 hover:text-slate-900 hover:bg-slate-100 transition-colors cursor-pointer text-center"
+              >
+                View Full Website →
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
