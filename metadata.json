@@ -1,0 +1,6 @@
+{
+  "name": "JanSuvidha Kendra & Business Facilitation Center",
+  "description": "Trusted offline business consultancy and e-governance facilitation center for business licenses, GST, ITR, MSME, DSC, and documentation services in India.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
